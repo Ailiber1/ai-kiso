@@ -86,6 +86,18 @@
 
   /* 記録 */
   .log{margin:20px 0}
+
+  /* まとめ（原理原則） */
+  .rules{padding:28px 28px 24px;border:1.5px solid var(--blue);border-radius:20px;background:#FFFFFF}
+  .rules ol{list-style:none;padding:0;margin:0;counter-reset:r}
+  .rules li:last-child{border-bottom:0}
+  .rules li{counter-increment:r;position:relative;padding:14px 0 14px 48px;border-bottom:1px solid var(--line-soft)}
+  .rules li::before{content:counter(r);position:absolute;left:0;top:12px;width:32px;height:32px;border-radius:50%;background:var(--logo);color:#FFFFFF;font-family:var(--mincho);font-weight:600;font-size:16px;line-height:32px;text-align:center}
+  .rules li b,.rules-use b{display:block;word-break:keep-all;overflow-wrap:anywhere;font-family:var(--mincho);font-weight:600;font-size:17.5px;color:var(--deep);line-height:1.7}
+  .rules li span,.rules-use span{display:block;margin-top:4px;font-size:15px;color:var(--muted)}
+  .rules-use{margin-top:20px;padding:16px 18px;border-radius:14px;background:hsl(217 91% 48% / .06)}
+  .rules-use b{color:var(--blue)}
+  @media (max-width:560px){ .rules{padding:20px 16px 16px} .rules li{padding-left:42px} }
   .end{padding:64px 0 96px;border-top:1px solid var(--line-soft);text-align:center;color:var(--muted)}
   .end .t{font-family:var(--mincho);font-weight:600;font-size:22px;letter-spacing:.06em;margin-bottom:12px;text-wrap:balance}
   h2,.cover p.sub{text-wrap:balance}
@@ -130,6 +142,7 @@
     <li><a href="#c4"><span class="n">04</span>指示の出し方で、答えは変わる</a></li>
     <li><a href="#c5"><span class="n">05</span>自分の仕事のどこに使うか</a></li>
     <li><a href="#c6"><span class="n">06</span>間違いの確かめ方（4つの動作）</a></li>
+    <li><a href="#rules"><span class="n">まとめ</span>AIの原理原則</a></li>
   </ol>
 
   <!-- 01 -->
@@ -309,6 +322,22 @@
     <button class="copy" data-target="plog">コピー（書き方の見本）</button>
     <div class="prompt" id="plog">11/25｜ChatGPT｜旅行の誘い文を3パターン作らせた｜意外｜3つとも同じ組み立てだった</div>
     <p class="note">記録が溜まると、あなたのAIの「得意・苦手の地図」になります。</p>
+  </section>
+
+  <!-- まとめ -->
+  <section id="rules">
+    <div class="no">SUMMARY</div>
+    <h2>AIの<wbr>原理原則</h2>
+    <div class="rules">
+      <ol>
+        <li><b>AIは「文章を作る道具」で、<wbr>辞書ではない</b><span>返ってきた答えは、調べた事実ではなく「作られた文章」だと考える。</span></li>
+        <li><b>自信ありげな口調でも、<wbr>正しいとは限らない</b><span>数字・年・人名・本の題名・URLが出たら、必ず自分で確かめる。</span></li>
+        <li><b>こちらの意見に合わせやすい</b><span>賛成か反対かを知りたい時は、自分の意見を先に言わない。</span></li>
+        <li><b>渡した情報の<wbr>範囲でしか<wbr>働けない</b><span>前提・手順・出力の形・守ること、の4つを渡す。</span></li>
+        <li><b>答えは毎回変わる。<wbr>長い会話では、<wbr>最初の指示が<wbr>薄れる</b><span>同じ答えを期待しない。長くなったら、新しいチャットに要点だけ持ち込む。</span></li>
+      </ol>
+      <p class="rules-use"><b>使う時の原則</b><span>間違いに自分で気づけて、間違っても元に戻せる作業から任せる。</span></p>
+    </div>
   </section>
 
   <footer class="end">
