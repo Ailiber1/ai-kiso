@@ -95,6 +95,10 @@
   .rules li::before{content:counter(r);position:absolute;left:0;top:12px;width:32px;height:32px;border-radius:50%;background:var(--logo);color:#FFFFFF;font-family:var(--mincho);font-weight:600;font-size:16px;line-height:32px;text-align:center}
   .rules li b,.rules-use b{display:block;word-break:keep-all;overflow-wrap:anywhere;font-family:var(--mincho);font-weight:600;font-size:17.5px;color:var(--deep);line-height:1.7}
   .rules li span,.rules-use span{display:block;margin-top:4px;font-size:15px;color:var(--muted)}
+  .rules-root{margin:0 0 8px;padding:4px 0 22px;border-bottom:1.5px solid var(--line)}
+  .rules-root b{display:block;font-family:var(--mincho);font-weight:600;font-size:13px;letter-spacing:.3em;color:var(--blue)}
+  .rules-root .big{display:block;margin:8px 0 6px;font-family:var(--mincho);font-weight:600;font-size:clamp(19px,4.6vw,23px);line-height:1.6;word-break:keep-all;overflow-wrap:anywhere;background:var(--logo);-webkit-background-clip:text;background-clip:text;color:transparent;width:fit-content;max-width:100%}
+  .rules-root span:not(.big){display:block;font-size:15px;color:var(--muted)}
   .rules-use{margin-top:20px;padding:16px 18px;border-radius:14px;background:hsl(217 91% 48% / .06)}
   .rules-use b{color:var(--blue)}
   @media (max-width:560px){ .rules{padding:20px 16px 16px} .rules li{padding-left:42px} }
@@ -329,6 +333,7 @@
     <div class="no">SUMMARY</div>
     <h2>AIの<wbr>原理原則</h2>
     <div class="rules">
+      <p class="rules-root"><b>根本の原理</b><span class="big">AIは、渡された文章をもとに、<wbr>もっともらしい続きを作る。</span><span>下の1〜5の多くは、ここから出てきます。</span></p>
       <ol>
         <li><b>AIは「文章を作る道具」で、<wbr>辞書ではない</b><span>返ってきた答えは、調べた事実ではなく「作られた文章」だと考える。</span></li>
         <li><b>自信ありげな口調でも、<wbr>正しいとは限らない</b><span>数字・年・人名・本の題名・URLが出たら、必ず自分で確かめる。</span></li>
