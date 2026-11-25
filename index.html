@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>はじめてのAI 基礎編</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="体験しながら学ぶ、AIの使い方と考え方">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23ffffff'/%3E%3Ctext x='32' y='43' text-anchor='middle' font-family='Hiragino Mincho ProN,serif' font-weight='600' font-size='30' fill='%231f5fe0'%3EAI%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    --logo:linear-gradient(105deg,hsl(224 76% 28%) 0%,hsl(217 91% 48%) 55%,hsl(222 80% 30%) 100%);
+    --blue:hsl(217 91% 48%);
+    --deep:hsl(224 76% 28%);
+    --muted:hsl(225 20% 38%);
+    --ink:hsl(225 14% 12%);
+    --line:hsl(217 91% 48% / .28);
+    --line-soft:hsl(217 91% 48% / .14);
+    --mincho:"Hiragino Mincho ProN","Noto Serif JP",Georgia,serif;
+    --sans:"Hiragino Sans","Noto Sans JP",system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0}
+  html{background:#FFFFFF}
+  body{background:#FFFFFF;color:var(--ink);font-family:var(--sans);font-weight:300;font-size:17px;line-height:2;letter-spacing:.03em}
+  .wrap{max-width:720px;margin:0 auto;padding:0 20px}
+  .grad{background:var(--logo);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* 表紙 */
+  .cover{padding:96px 0 72px}
+  .label{display:flex;align-items:center;gap:20px;font-family:var(--mincho);font-size:14px;letter-spacing:.5em;color:var(--blue);text-transform:uppercase}
+  .label i{display:block;width:56px;height:2px;background:var(--blue)}
+  .cover h1{font-family:var(--mincho);font-weight:600;font-size:clamp(44px,10vw,76px);line-height:1.3;letter-spacing:.04em;margin:40px 0 28px}
+  .cover h1 span{display:block}
+  .cover p.sub{font-size:18px;color:var(--muted);letter-spacing:.1em}
+  .cover p.sub b{font-weight:600;color:var(--deep)}
+  .lead{margin-top:48px;padding-top:32px;border-top:1px solid var(--line-soft);color:var(--ink)}
+
+  /* はじめる */
+  .start{margin-top:40px;padding:24px;border:1px solid var(--line);border-radius:20px}
+  .start-h{font-family:var(--mincho);font-weight:600;font-size:18px;color:var(--deep)}
+  .links{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+  .links a{display:flex;flex-direction:column;gap:2px;padding:14px 16px;border:1px solid var(--line);border-radius:14px;text-decoration:none;color:var(--ink);line-height:1.6;transition:border-color .2s}
+  .links a b{font-family:var(--mincho);font-weight:600;font-size:17px;color:var(--blue)}
+  .links a span{font-size:13px;color:var(--muted);overflow-wrap:anywhere}
+  .links a:hover{border-color:var(--blue)}
+  @media (max-width:560px){ .links{grid-template-columns:1fr} .start{padding:20px 16px} }
+
+  /* 目次 */
+  .toc{margin:8px 0 72px;padding:0;list-style:none;border-top:1px solid var(--line-soft)}
+  .toc li{border-bottom:1px solid var(--line-soft)}
+  .toc a{display:flex;gap:20px;padding:14px 4px;color:var(--ink);text-decoration:none;font-size:16px}
+  .toc a:hover{color:var(--blue)}
+  .toc .n{font-family:var(--mincho);color:var(--blue);min-width:2em}
+
+  /* 章 */
+  section{padding:56px 0;border-top:1px solid var(--line-soft)}
+  .no{font-family:var(--mincho);font-size:13px;letter-spacing:.5em;color:var(--blue)}
+  h2{font-family:var(--mincho);font-weight:600;font-size:clamp(28px,6vw,38px);line-height:1.5;letter-spacing:.04em;margin:8px 0 24px;background:var(--logo);-webkit-background-clip:text;background-clip:text;color:transparent;width:fit-content;max-width:100%}
+  h3{font-family:var(--mincho);font-weight:600;font-size:19px;color:var(--deep);margin:32px 0 4px}
+  p+p{margin-top:1em}
+  .key{margin:24px 0;padding:4px 0 4px 20px;border-left:3px solid var(--blue);font-size:18px;color:var(--deep);font-weight:400}
+
+  table{width:100%;border-collapse:collapse;margin:20px 0;font-size:15.5px;line-height:1.8}
+  th,td{padding:12px 14px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line-soft);overflow-wrap:break-word}
+  th{font-family:var(--mincho);font-weight:600;color:var(--deep);border-bottom:1px solid var(--line)}
+  .col2 td:first-child{width:45%}
+  th:has(+ td){white-space:nowrap;width:1%;padding-right:20px}
+
+  .note{font-size:14.5px;color:var(--muted);line-height:1.9}
+
+  /* 試してみよう */
+  .try{margin:36px 0 0;padding:28px 24px;border:1px solid var(--line);border-radius:20px;background:#FFFFFF}
+  .try .tag{display:flex;align-items:center;gap:14px;font-family:var(--mincho);font-weight:600;font-size:18px;color:var(--blue)}
+  .try .tag i{display:block;width:32px;height:2px;background:var(--blue)}
+  .try ol{padding-left:1.4em;margin:14px 0}
+  .try li{margin:6px 0}
+  .prompt{position:relative;margin:14px 0;padding:18px 20px 18px 20px;border:1px solid var(--line);border-radius:14px;background:#FFFFFF;font-size:15.5px;line-height:1.9;white-space:pre-wrap;overflow-wrap:break-word;color:var(--ink);font-weight:400}
+  .copy{display:inline-block;margin:0 0 4px;padding:7px 16px;border:1px solid var(--line);border-radius:999px;background:#FFFFFF;color:var(--blue);font:inherit;font-size:13px;letter-spacing:.08em;cursor:pointer}
+  .copy:hover{background:var(--blue);color:#FFFFFF}
+  .look{font-size:15px;color:var(--muted);margin-top:10px}
+  .look + .copy{margin-top:20px}
+  .look b{font-weight:600;color:var(--deep)}
+
+  .warn{margin:24px 0;padding:18px 20px;border:1px solid var(--line);border-radius:14px;font-size:15.5px}
+  .warn b{font-family:var(--mincho);color:var(--deep)}
+
+  /* 記録 */
+  .log{margin:20px 0}
+  .end{padding:64px 0 96px;border-top:1px solid var(--line-soft);text-align:center;color:var(--muted)}
+  .end .t{font-family:var(--mincho);font-weight:600;font-size:22px;letter-spacing:.06em;margin-bottom:12px;text-wrap:balance}
+  h2,.cover p.sub{text-wrap:balance}
+
+  @media (max-width:560px){
+    body{font-size:16px}
+    .cover{padding:64px 0 48px}
+    .try{padding:22px 16px}
+    th,td{padding:10px 8px}
+    .col2 td:first-child{width:auto}
+  }
+  @media print{ .copy{display:none} section{break-inside:avoid-page} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="cover" id="top">
+    <div class="label"><i></i>GUIDE</div>
+    <h1 class="grad"><span>はじめてのAI</span><span>基礎編</span></h1>
+    <p class="sub">体験しながら学ぶ、<b>AIの使い方と考え方</b></p>
+    <p class="lead">この資料は、読むだけで終わらないように作っています。各章の終わりに「試してみよう」があります。文面をコピーして、ChatGPT・Claude・Geminiなど、お好きなAIに貼って試してください。どれか1つで構いません。2つ以上で試すと、違いも分かります。</p>
+
+    <div class="start">
+      <p class="start-h">まだアカウントがない方へ</p>
+      <p class="note">どれも無料のプランから始められます（使える量には上限があります）。下の公式ページから登録できます。</p>
+      <div class="links">
+        <a href="https://chatgpt.com/" target="_blank" rel="noopener"><b>ChatGPT</b><span>chatgpt.com</span></a>
+        <a href="https://claude.ai/" target="_blank" rel="noopener"><b>Claude</b><span>claude.ai</span></a>
+        <a href="https://gemini.google.com/" target="_blank" rel="noopener"><b>Gemini</b><span>gemini.google.com</span></a>
+      </div>
+      <p class="note">Geminiは、Googleアカウントで使えます。</p>
+    </div>
+  </header>
+
+  <ol class="toc">
+    <li><a href="#c1"><span class="n">01</span>AIは「文章を作る道具」</a></li>
+    <li><a href="#c2"><span class="n">02</span>得意なこと・苦手なこと</a></li>
+    <li><a href="#c3"><span class="n">03</span>自信ありげに間違える・人に合わせる</a></li>
+    <li><a href="#c4"><span class="n">04</span>指示の出し方で、答えは変わる</a></li>
+    <li><a href="#c5"><span class="n">05</span>自分の仕事のどこに使うか</a></li>
+    <li><a href="#c6"><span class="n">06</span>間違いの確かめ方（4つの動作）</a></li>
+  </ol>
+
+  <!-- 01 -->
+  <section id="c1">
+    <div class="no">01</div>
+    <h2>AIは「文章を作る道具」</h2>
+    <p>ChatGPTやClaudeは、たくさんの文章から学んだAIです。こちらが書いた文章を受け取り、その続きとして「もっともらしい言葉」を選んで、つないで返しています。</p>
+    <p class="key">調べた事実を取り出す辞書ではなく、文章を作る道具です。</p>
+    <p>最近の画面は、必要に応じてネット検索を使うこともあります。使う場合も、使わない場合もあります。どちらにしても、返ってきた文章は「作られたもの」だと考えておくと、この先の話が分かりやすくなります。</p>
+
+    <div class="try">
+      <div class="tag"><i></i>試してみよう</div>
+      <p>まず、AIの画面を開いてください（アカウントがない方は、<a href="#top" style="color:var(--blue)">冒頭の公式ページ</a>から登録できます）。そして次の文面を貼ります。</p>
+      <button class="copy" data-target="p1">コピー</button>
+      <div class="prompt" id="p1">友人を週末の日帰り旅行に誘うメッセージを、雰囲気の違う3パターンで作ってください。</div>
+      <p class="look"><b>見るポイント：</b>そのまま送れる文は少ないはずです。自分なら言わない言い回しは、いくつありましたか。直す所の数を数えておきましょう。</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section id="c2">
+    <div class="no">02</div>
+    <h2>得意なこと・苦手なこと</h2>
+    <table class="col2">
+      <tr><th>得意なこと</th><th>苦手なこと（ことがあります）</th></tr>
+      <tr><td>たたき台を作る</td><td>正確な数字・年・固有名詞を、間違えずに出す</td></tr>
+      <tr><td>長い文章を短くまとめる</td><td>最新の出来事や、あまり知られていない情報</td></tr>
+      <tr><td>言い換える・丁寧にする・翻訳する</td><td>こちらの事情を知ること（渡していない情報は知りません）</td></tr>
+      <tr><td>バラバラな情報を整理・分類する</td><td>毎回まったく同じ答えを返すこと（答えは毎回少し変わります）</td></tr>
+      <tr><td>アイデアを出す</td><td>長い計算や、数を正確に数え上げること</td></tr>
+    </table>
+    <p class="note">モデルや画面は、どんどん変わります。この表は目安です。「自分の使うAIは、どこが得意でどこが苦手か」は、触って確かめるのが一番確実です。</p>
+
+    <div class="try">
+      <div class="tag"><i></i>試してみよう</div>
+      <p>同じ文面を、時間を置いて2回送ってみてください。</p>
+      <button class="copy" data-target="p2">コピー</button>
+      <div class="prompt" id="p2">「週末の天気がよかったら、散歩に行きたい」という一文を、気持ちを変えずに、違う言い方で5つ書き直してください。</div>
+      <p class="look"><b>見るポイント：</b>1回目と2回目で、答えは同じですか。違っても、どちらも「使える」と言えますか。</p>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section id="c3">
+    <div class="no">03</div>
+    <h2>自信ありげに間違える・人に合わせる</h2>
+    <h3>ハルシネーション（もっともらしい間違い）</h3>
+    <p>AIは、分からないときも、それらしい文章を作ってしまうことがあります。これを「ハルシネーション」と呼びます。</p>
+    <p class="key">口調の自信と、内容の正しさは関係ありません。</p>
+    <p>特に注意するのは、数字・年・人名・本や論文の題名・出典のURLです。そこが出てきたら、必ず自分で確かめます（確かめ方は第6章）。</p>
+
+    <h3>人に合わせてしまう（迎合）</h3>
+    <p>AIは、こちらの考えに寄り添った答えを返しやすい性質があります。「そうだよね？」と聞くと、「そうですね」と返ってきやすいのです。反論すると、意見をあっさり変えることもあります。</p>
+    <p class="key">賛成か反対かを知りたいときは、こちらの意見を先に言わないのが基本です。</p>
+
+    <div class="try">
+      <div class="tag"><i></i>試してみよう（2回に分けて）</div>
+      <ol>
+        <li>新しいチャットで、次の1つ目を送ります。</li>
+        <li>もう一度、別の新しいチャットで、2つ目を送ります。</li>
+      </ol>
+      <button class="copy" data-target="p3a">コピー（1つ目）</button>
+      <div class="prompt" id="p3a">在宅勤務は集中できると思う。そうだよね？</div>
+      <button class="copy" data-target="p3b">コピー（2つ目）</button>
+      <div class="prompt" id="p3b">在宅勤務は集中できないと思う。そうだよね？</div>
+      <p class="look"><b>見るポイント：</b>2つの答えは、同じ立場でしたか。次に、こちらの意見を伏せて、次の聞き方でも試してみましょう。</p>
+      <button class="copy" data-target="p3c">コピー（中立の聞き方）</button>
+      <div class="prompt" id="p3c">在宅勤務は集中できるか、できないか。賛成と反対の根拠を、同じ分量で並べてください。私の意見は考えに入れないでください。</div>
+    </div>
+
+    <div class="try">
+      <div class="tag"><i></i>試してみよう（間違い探し）</div>
+      <p>自分が詳しい題材（趣味・出身地・よく知っている店など）を、[ ]に入れて送ります。</p>
+      <button class="copy" data-target="p3d">コピー</button>
+      <div class="prompt" id="p3d">[自分が詳しい題材]について、細かい事実を5つ、数字や年を入れて教えてください。分からないことは「分からない」と書いてください。</div>
+      <p class="look"><b>見るポイント：</b>自分が答えを知っているので、間違いを見つけられます。間違っている部分も、正しい部分と同じ口調で書かれていませんか。毎回間違えるとは限りません。間違えなかったときも、それが「普通」です。</p>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section id="c4">
+    <div class="no">04</div>
+    <h2>指示の出し方で、答えは変わる</h2>
+    <p>AIは、渡した情報の範囲でしか働けません。同じ頼みごとでも、何を渡すかで答えは大きく変わります。</p>
+    <p class="key">指示は、4つに分けて書くと安定します。</p>
+    <table>
+      <tr><th>前提</th><td>誰が・何のために・どんな状況か</td></tr>
+      <tr><th>手順</th><td>何を、どの順番でしてほしいか</td></tr>
+      <tr><th>出力の形</th><td>箇条書き・表・文字数など、どんな形で返してほしいか</td></tr>
+      <tr><th>守ること</th><td>してはいけないこと、分からないときの扱い</td></tr>
+    </table>
+
+    <h3>悪い例と、良い例</h3>
+    <table class="col2">
+      <tr><th>悪い例</th><th>良い例</th></tr>
+      <tr><td>旅行の持ち物を教えて</td><td>来週、家族4人（子どもは小学生2人）で、2泊3日の温泉旅行に行きます。持ち物を、忘れやすい順に10個、箇条書きで。分からない点は聞き返してください。</td></tr>
+    </table>
+    <p class="note">これは例です。返ってくる答えは毎回変わります。</p>
+    <p>もう1つ大切なのが、長い会話での「薄れ」です。会話が長くなると、最初に出した指示が守られなくなることがあります。そのときは、新しいチャットに、要点だけを書き直して持ち込みます。</p>
+
+    <div class="try">
+      <div class="tag"><i></i>試してみよう</div>
+      <p>まず、悪い例を送って、答えを見ます。次に、同じチャットで、[ ]を自分の予定に直した良い例を送ります。</p>
+      <button class="copy" data-target="p4a">コピー（悪い例）</button>
+      <div class="prompt" id="p4a">旅行の持ち物を教えて</div>
+      <button class="copy" data-target="p4b">コピー（良い例）</button>
+      <div class="prompt" id="p4b">来週、[人数と構成]で、[日数]の[旅行の種類]に行きます。持ち物を、忘れやすい順に10個、箇条書きで教えてください。分からない点は、先に聞き返してください。</div>
+      <p class="look"><b>見るポイント：</b>どの情報を渡したとき、答えが一番変わりましたか。それが、あなたのAIに「効く」情報です。</p>
+    </div>
+  </section>
+
+  <!-- 05 -->
+  <section id="c5">
+    <div class="no">05</div>
+    <h2>自分の仕事のどこに使うか</h2>
+    <p>ここが一番大切な章です。文章や画像を作る使い方は、すでに多くの方が使えています。差がつくのは、「自分の日々の作業のどこに、どう指示を出せば役に立つか」です。</p>
+    <p class="key">使う場所は、書き出して、2つの問いで仕分けます。</p>
+
+    <h3>手順</h3>
+    <p>① 先週やった作業を、動詞で10個書き出します（「集める」「並べ直す」「文章にする」「確認する」など）。</p>
+    <p>② 作業ごとに、2つの問いで考えます。</p>
+    <table>
+      <tr><th>問い1</th><td>AIが間違えたとき、自分は気づけるか？（「これなら正しい」と言える基準が自分にあるか）</td></tr>
+      <tr><th>問い2</th><td>間違えたまま進んだら、痛いか？ 元に戻せるか？</td></tr>
+    </table>
+    <table class="col2">
+      <tr><th>状態</th><th>扱い</th></tr>
+      <tr><td>気づける、かつ、戻せて痛くない</td><td>任せる</td></tr>
+      <tr><td>気づける、戻せるが痛い</td><td>あとでまとめて確認する</td></tr>
+      <tr><td>気づけない</td><td>まだ任せない（先に基準を作る）</td></tr>
+      <tr><td>戻せず痛い</td><td>人が判断する（AIは下書きまで）</td></tr>
+    </table>
+    <p>③ 「任せる」の中から、毎週ある作業を1つ選び、指示書にします（前提・手順・出力の形・守ること）。</p>
+    <p>④ 動かして、直した回数を数えます。直しが減ってきたら、任せる範囲を少しずつ広げます。</p>
+
+    <div class="warn"><b>先に確認してください。</b><br>仕事の情報をAIに入れてよいかは、会社のルールで決まっています。入れる前に確認してください。確認できるまでは、人名・会社名・金額などは伏せるか、練習用の作り話に置き換えて試してください。</div>
+
+    <div class="try">
+      <div class="tag"><i></i>試してみよう</div>
+      <p>先週やった作業を、伏せ字にして[ ]に入れて送ります。</p>
+      <button class="copy" data-target="p5">コピー</button>
+      <div class="prompt" id="p5">私が先週やった作業は次のとおりです。
+[作業を動詞で10個、箇条書き]
+
+それぞれについて、「AIに任せられる部分」と「人が確認すべき部分」に分けて提案してください。間違いに気づきにくい作業と、間違えると取り返しがつきにくい作業には、印を付けてください。</div>
+      <p class="look"><b>見るポイント：</b>AIの仕分けが、自分の感覚と合っているかを見ます。違うところが、あなたの仕事の「基準」です。</p>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section id="c6">
+    <div class="no">06</div>
+    <h2>間違いの確かめ方（4つの動作）</h2>
+    <p>「疑いましょう」だけでは、動けません。次の4つの動作に落とします。</p>
+    <table>
+      <tr><th>1</th><td><b>一次情報を見る</b><br>公式サイト・公的な資料など、元の情報で確かめます。</td></tr>
+      <tr><th>2</th><td><b>出典を開く</b><br>AIが示した出典やリンクを、実際に開きます。リンクそのものが存在しないこともあります。</td></tr>
+      <tr><th>3</th><td><b>別のAIで比べる</b><br>同じ質問を、別のAIにも送って、答えを比べます。</td></tr>
+      <tr><th>4</th><td><b>「弱点は？」と聞く</b><br>「この答えで、間違っているかもしれない所はどこですか」と聞き返します。</td></tr>
+    </table>
+
+    <div class="try">
+      <div class="tag"><i></i>試してみよう</div>
+      <p>第3章の間違い探しの答えに、続けて送ります。</p>
+      <button class="copy" data-target="p6">コピー</button>
+      <div class="prompt" id="p6">今の答えの中で、間違っているかもしれない所、自信がない所はどこですか。根拠が弱い順に挙げてください。</div>
+      <p class="look"><b>見るポイント：</b>自分が見つけた間違いを、AIも挙げましたか。ただし、この答えも正しいとは限りません。4つを組み合わせて使います。</p>
+    </div>
+  </section>
+
+  <!-- 記録 -->
+  <section id="log">
+    <div class="no">RECORD</div>
+    <h2>毎回、1行だけ記録する</h2>
+    <p>AIの得意・苦手の感覚は、触った数だけ育ちます。試すたびに、次の1行だけをメモに残してください。</p>
+    <p class="look"><b>書き方：</b>日付｜使ったAI｜何をしたか｜得意・苦手・意外｜一言</p>
+    <button class="copy" data-target="plog">コピー（書き方の見本）</button>
+    <div class="prompt" id="plog">11/25｜ChatGPT｜旅行の誘い文を3パターン作らせた｜意外｜3つとも同じ組み立てだった</div>
+    <p class="note">記録が溜まると、あなたのAIの「得意・苦手の地図」になります。</p>
+  </section>
+
+  <footer class="end">
+    <div class="t grad" style="display:inline-block">まずは、毎日5分だけ触ってみる。</div>
+    <p>数をこなすほど、何ができて、何ができないかが分かってきます。</p>
+  </footer>
+
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var el = document.getElementById(btn.getAttribute('data-target'));
+      if(!el) return;
+      var text = el.innerText;
+      var label = btn.textContent;
+      function done(ok){
+        btn.textContent = ok ? 'コピーしました' : '選択して、手でコピーしてください';
+        if(!ok){
+          try{ var r=document.createRange(); r.selectNodeContents(el); var s=window.getSelection(); s.removeAllRanges(); s.addRange(r); }catch(e){}
+        }
+        setTimeout(function(){ btn.textContent = label; }, 2000);
+      }
+      try{
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(function(){done(true)}, function(){done(false)});
+        } else { done(false); }
+      }catch(e){ done(false); }
+    });
+  });
+</script>
+</body>
+</html>
